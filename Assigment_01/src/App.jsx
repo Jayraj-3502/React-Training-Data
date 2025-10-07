@@ -1,16 +1,6 @@
 import { useState } from "react";
-import Task1 from "./components/Task1";
-import Task2 from "./components/Task2";
-import Task3 from "./components/ Task3";
-import Task4 from "./components/Task4";
-import MediumTask1 from "./components/Medium/MediumTask1";
-import MediumTask2 from "./components/Medium/MediumTask2";
-import MediumTask3 from "./components/Medium/MediumTask3";
-import MediumTask4 from "./components/Medium/MediumTask4";
-import MediumTask5 from "./components/Medium/MediumTask5";
-import SemiHardTask1 from "./components/SemiHard/SemiHardTask1";
-import SemiHardTask2 from "./components/SemiHard/SemiHardTask2";
-import SemiHardTask3 from "./components/SemiHard/SemiHardTask3";
+
+import {SemiHardTask1, SemiHardTask2, SemiHardTask3, MediumTask1, MediumTask2, MediumTask3, MediumTask4, MediumTask5, Task1, Task2, Task3, Task4} from './components/export';
 
 function App() {
   const [count, setCount] = useState(0);
@@ -49,74 +39,110 @@ function App() {
 
 
   return (
-    <>
-      <h1 className="text-5xl ">This is Main App.</h1>
+    <div>
+      <h1 className="text-5xl font-bold text-blue-500">This is Main App.</h1>
 
-      {/* <h2>Easy Questions:</h2>
+      <div>
+        <h2 className="mb-8 text-3xl underline">Easy Questions:</h2>
 
-      <h3>Task 1:</h3>
-      <Task1 />
+        <div className="flex flex-col gap-5">
+          <div>
+            <h3>Task 1:</h3>
+            <Task1 />
+          </div>
 
-      <h3>Task 2:</h3>
-      {
-        nameArray.map((name, index) => {
-          return <Task2 name={name} key={index}/>
-          // console.log(name);
-        })
-      }
+          <div>
+            <h3>Task 2:</h3>
+            {
+              nameArray.map((name, index) => {
+                return <Task2 name={name} key={index}/>
+                // console.log(name);
+              })
+            }
+          </div>
 
-      <h3>Task 3:</h3>
-      <Task3 />
+          <div>
+            <h3>Task 3:</h3>
+            <Task3 />
+          </div>
 
-      <h3>Task 4:</h3>
-      <Task4 />
+          <div>
+            <h3>Task 4:</h3>
+            <Task4 />
+          </div>
 
-      <h3>Task 5:</h3>
-      <p>Virtual DOM is a just a copy of real DOM which react uses internally to do changes. Then compare it with real DOM and modify only those things which is needed instead to repaint the entire DOM.</p>
-
-      <hr />
-
-      <h2>Medium Questions:</h2>
+          <div>
+            <h3>Task 5:</h3>
+            W<p>Virtual DOM is a just a copy of real DOM which react uses internally to do changes. Then compare it with real DOM and modify only those things which is needed instead to repaint the entire DOM.</p>
+          </div>
+        </div>
+      </div>
       
-      <h3>Task 1:</h3>
-      {
-        nameAgeArray.map((element, index) => {
-          const {name, age} = element;
-          return <MediumTask1 name={name} age={age} key={index}/>
-        })
-      }
 
-      <h3>Task 2:</h3>
-      <MediumTask2 num={task2Number} />
-      <button onClick={() => {setTask2Number(prev => prev+10)}}>Click To Change Number</button>
+      <hr className="my-10" />
 
-      <h3>Task 3:</h3>
-      <MediumTask3 num={task3Num} updateNumber={updateNumber} />
+      <div>
+        <h2 className="mb-8 text-3xl underline">Semi Hard Questions:</h2>
+        <div className="flex flex-col gap-5">
+          <div>
+            <h3>Task 1:</h3>
+            {
+              nameAgeArray.map((element, index) => {
+                const {name, age} = element;
+                return <MediumTask1 name={name} age={age} key={index}/>
+              })
+            }
+          </div>
+          <div>
+            <h3>Task 2:</h3>
+            <MediumTask2 num={task2Number} />
+            <button onClick={() => {setTask2Number(prev => prev+10)}}>Click To Change Number</button>
+          </div>
+          <div>
+            <h3>Task 3:</h3>
+            <MediumTask3 num={task3Num} updateNumber={updateNumber} />
+          </div>
+          <div>
+            <h3>Task 4:</h3>
+            <MediumTask4 />
+          </div>
+          <div>
+            <h3>Task 5:</h3>
+            <MediumTask5 />
+          </div>
+        </div>
+      </div>
 
-      <h3>Task 4:</h3>
-      <MediumTask4 />
+      <hr className="my-10"/>
 
-      <h3>Task 5:</h3>
-      <MediumTask5 />
+      <div>
+        <h2>Medium Questions:</h2>
 
-      <hr /> */}
+        <div>
+          <div>
+            <h3>Task 1:</h3>
+            <SemiHardTask1 />
+          </div>
+          <div>
 
-      <h2>Medium Questions:</h2>
+          </div>
+          <div>
 
-      <h3>Task 1:</h3>
-      <SemiHardTask1 />
+          </div>
+        </div>
+      </div>
+      
 
-      <h3>Task 2:</h3>
-      <div>This is Parent Value: {parentValue}</div>
-      <SemiHardTask2  childValue={childValue} parentValueUpdater={parentValueUpdater}/>
-      <button onClick={() => {childValueUpdater()}}>Child Update From Parent</button>
+      
+
+      
 
       <h3>Task 3:</h3>
       <SemiHardTask3 dataToShow={'Click Me'} onClickEvent={() => {console.log("This is Clicked")}} btnColor={'red'} />
 
 
 
-    </>
+    </div>
   );
 }
 
