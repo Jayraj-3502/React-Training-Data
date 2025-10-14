@@ -1,25 +1,21 @@
 import { useContext, useEffect, useState } from "react";
-import { gettingProductsData } from "../apiCalling";
 import Card from "../Card/Card";
 import { useNavigate, Link } from "react-router-dom";
-import { checkAuthentication } from "../apiCalling";
 import "./Home.css";
 import { UserContext } from "../../context/context";
 
 export default function Home() {
-  const { loggedIn, setLoggedIn } = useContext(UserContext);
+  const { userData, getUserDataLocal, curretUser } = useContext(UserContext);
   const [productsData, setProductsData] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log(loggedIn);
-
-    if (!loggedIn) {
-      navigate("/login");
-    }
-    console.log(loggedIn);
-
-    setLoggedIn(true);
+    console.log(userData);
+    console.log(curretUser);
+    // if (!loggedIn) {
+    //   navigate("/login");
+    // }
+    // console.log(loggedIn);
 
     fetch("http://localhost:3000/products")
       .then((res) => {

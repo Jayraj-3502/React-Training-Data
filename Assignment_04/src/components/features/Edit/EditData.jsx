@@ -1,9 +1,7 @@
 import { use, useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { checkAuthentication } from "../../apiCalling";
 
 export default function EditData() {
-  const [authenticated, setAuthenticated] = useState(checkAuthentication());
   const navigate = useNavigate();
   const [product, setProduct] = useState({
     id: "0",
@@ -32,9 +30,6 @@ export default function EditData() {
   }
 
   useEffect(() => {
-    if (!authenticated) {
-      navigate("/login");
-    }
     gettingProductsData();
   }, []);
 

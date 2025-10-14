@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
-import { checkAuthentication } from "../../apiCalling";
 import { useNavigate } from "react-router-dom";
 
-export function Add() {
-  const [authenticated, setAuthenticated] = useState(checkAuthentication());
+export default function Add() {
   const navigate = useNavigate();
 
   const [newData, setNewData] = useState({
@@ -13,12 +11,6 @@ export function Add() {
     price: 0,
     quantity: 0,
   });
-
-  useEffect(() => {
-    if (!authenticated) {
-      navigate("/login");
-    }
-  }, []);
 
   function handleOnSubmit(event) {
     event.preventDefault();

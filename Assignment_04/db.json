@@ -1,0 +1,18 @@
+{
+  "products": [
+    {
+      "id": "1760431290482",
+      "name": "Samantha Floyd",
+      "description": "Rerum rerum laudanti",
+      "price": "805",
+      "quantity": "841"
+    },
+    {
+      "id": "1760448678037",
+      "name": "Nomlanga Frederick",
+      "description": "Quaerat harum blandi",
+      "price": "772",
+      "quantity": "130"
+    }
+  ]
+}

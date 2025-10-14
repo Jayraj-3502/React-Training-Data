@@ -1,31 +1,62 @@
 import { useContext, useEffect, useState } from "react";
 import { useActionData, useNavigate } from "react-router-dom";
-import { setAuthentication } from "../../components/apiCalling";
 import { UserContext } from "../../context/context";
+import "./Login.css";
 
 export default function Login() {
-  const [inputName, setInputName] = useState("");
+  const [inputEmail, setInputEmail] = useState("");
   const [inputPassword, setInputPassword] = useState("");
   const navigate = useNavigate();
-  const { getUserDataLocal, userData, setLoggedIn } = useContext(UserContext);
+  const { userData, setUserData, currentUser, setCurrentUser } =
+    useContext(UserContext);
 
   useEffect(() => {
-    getUserDataLocal();
+    if (currentUser) {
+      navigate("/");
+    }
   }, []);
 
   function onHandleSubmit(event) {
     event.preventDefault();
     console.log(userData);
-    console.log(userData[0].name);
     if (
-      userData[0].name === inputName &&
+      userData[0].email === inputEmail &&
       userData[0].password === inputPassword
     ) {
       console.log(true);
-      setLoggedIn(true);
+      setUserData((prev) =>
+        prev.map((item) => {
+          if (item.email === inputEmail) {
+            return { ...item, loggedIn: true };
+          } else {
+            return item;
+          }
+        })
+      );
+      setCurrentUser(
+        userData.find((item) => {
+          if (item.email === inputEmail) {
+            return item;
+          }
+        })
+      );
+      setCurrentUserToLocal();
       navigate("/");
     } else {
       console.log(false);
+    }
+  }
+
+  function setCurrentUserToLocal() {
+    let value = userData.find((item) => {
+      if (item.email === inputEmail) {
+        return item;
+      }
+    });
+    try {
+      localStorage.setItem("currentUserData", JSON.stringify(value));
+    } catch (err) {
+      console.log(err);
     }
   }
 
@@ -35,16 +66,18 @@ export default function Login() {
       onSubmit={(event) => {
         onHandleSubmit(event);
       }}
+      className="form--primary__design"
     >
       <input
-        type="text"
-        name="name"
-        placeholder="Enter your Name"
-        value={inputName}
+        type="email"
+        name="email"
+        placeholder="Enter your Email"
+        value={inputEmail}
         onChange={(event) => {
-          setInputName(event.target.value);
+          setInputEmail(event.target.value);
         }}
         required
+        className="input-box"
       />
       <input
         type="password"
@@ -55,9 +88,12 @@ export default function Login() {
           setInputPassword(event.target.value);
         }}
         required
+        className="input-box"
       />
       <div>
-        <button type="submit">Submit</button>
+        <button type="submit" className="input-button">
+          Submit
+        </button>
       </div>
     </form>
   );

@@ -1,0 +1,5 @@
+.layout--primary__design {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}

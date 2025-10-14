@@ -1,0 +1,25 @@
+{
+  "products": [
+    {
+      "product_id": "1",
+      "product_name": "product 1",
+      "product_price": "50",
+      "product_quantity": "20",
+      "product_description": "This is product 1 description."
+    },
+    {
+      "product_id": "2",
+      "product_name": "product 2",
+      "product_price": "40",
+      "product_quantity": "10",
+      "product_description": "This is product 2 description."
+    },
+    {
+      "product_id": "3",
+      "product_name": "product 3",
+      "product_price": "70",
+      "product_quantity": "50",
+      "product_description": "This is product 3 description."
+    }
+  ]
+}
