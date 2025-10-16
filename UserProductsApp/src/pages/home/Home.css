@@ -1,0 +1,16 @@
+.home--primary__layout {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    max-width: 90%;
+    margin: auto;
+}
+
+.home-cards__layout {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+}

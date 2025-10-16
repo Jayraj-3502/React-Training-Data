@@ -1,6 +1,6 @@
 .card--primary__design {
   border: 1px solid rgba(0, 0, 0, 0.2);
-  padding: 12px;
+  padding: 20px 30px;
   border-radius: 6px;
   box-shadow: 0px 0px 18px rgba(128, 128, 128, 0.5);
   font-size: 18px;
@@ -8,6 +8,9 @@
   display: flex;
   flex-direction: column;
   gap: 5px;
+  min-width: 200px;
+  max-width: 300px;
+
 }
 
 .card-button__layout {
