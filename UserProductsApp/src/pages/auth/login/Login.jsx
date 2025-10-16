@@ -12,8 +12,10 @@ export default function Login() {
     event.preventDefault();
 
     console.log(state);
+    console.log(userData);
 
     const finded = state.users.find((item) => {
+      console.log("this is running");
       return (
         item.email === userData.email && item.password === userData.password
       );
@@ -35,8 +37,9 @@ export default function Login() {
   }
 
   useEffect(() => {
-    console.log(userData);
-    console.log(state);
+    // if (state.currentUserData === null) {
+    //   navigate("/");
+    // }
   }, [state]);
 
   return (

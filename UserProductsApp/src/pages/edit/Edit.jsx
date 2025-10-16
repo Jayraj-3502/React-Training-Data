@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
 import "./Edit.css";
 import { useParams } from "react-router-dom";
-import { useProductContext } from "../../contextAPI/contextAPI";
-import { useFetch } from "../../data/fetchData";
+import { useDispatch, useSelector } from "react-redux";
+import { selectProduct } from "../../features/products/product";
+// import { useProductContext } from "../../contextAPI/contextAPI";
+// import { useFetch } from "../../data/fetchData";
 
 export default function Edit() {
-  const { state, dispatch } = useProductContext();
+  // const { state, dispatch } = useProductContext();
   const currentProductId = useParams();
+  const dispatch = useDispatch();
 
   const [currentData, setCurrentData] = useState({
     id: "",
@@ -18,29 +21,13 @@ export default function Edit() {
 
   function onHandleSubmit(event) {
     event.preventDefault();
-    dispatch({ type: "edited", payload: currentData });
-
-    // dispatch({ type: "add", payload: newObject });
-  }
-
-  async function fetchingCurrentProduct() {
-    console.log("runs");
-    const responce = await useFetch({
-      mainURL: `products/${currentProductId.id}`,
-      method: "GET",
-    });
-    const data = await responce;
-    console.log(data);
-    setCurrentData(data);
-    dispatch({ type: "editingProduct", payload: data });
   }
 
   useEffect(() => {
-    fetchingCurrentProduct();
-    console.log("this runs");
+    console.log(currentData);
+    const data = dispatch(selectProduct(currentProductId));
+    console.log(data);
   }, []);
-
-  // useEffect(() => {}, [state]);
 
   return (
     <div>

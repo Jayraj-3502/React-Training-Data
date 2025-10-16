@@ -5,18 +5,7 @@ import { useNavigate } from "react-router-dom";
 const DataContext = createContext();
 
 const initialStates = {
-  users: [
-    {
-      user_name: "Jairaj rathod",
-      email: "rathodjairaj805@gmail.com",
-      password: "asdfghjkl",
-    },
-    {
-      user_name: "piyush",
-      emial: "piyush69@gmail.com",
-      password: "piyush69",
-    },
-  ],
+  users: [],
   productsData: [],
   currentUserData: {},
   currentProductData: {},
@@ -61,6 +50,14 @@ const reducer = (state, action) => {
       };
     case "add_user":
       console.log("Adding User");
+      console.log(action.payload);
+      return {
+        ...state,
+        users: [...state.users, ...action.payload],
+      };
+    case "post_user":
+      console.log("Post User");
+      postNewUserData(action.payload);
       return {
         ...state,
         users: [...state.users, action.payload],
@@ -72,10 +69,19 @@ const reducer = (state, action) => {
         ...state,
         currentUserData: action.payload,
       };
+    case "remove_current_user":
+      console.log("Removing current user");
+      removeCurrentUserData();
+      return {
+        ...state,
+        currentUserData: action.payload,
+      };
 
     default:
       console.log("This is default");
-      break;
+      return {
+        ...state,
+      };
   }
 };
 
@@ -83,7 +89,25 @@ function updateCurrentUserData(data) {
   localStorage.setItem("currentUserDetails", JSON.stringify(data));
 }
 
-function setCurrentUserData() {}
+function removeCurrentUserData() {
+  localStorage.removeItem("currentUserDetails");
+}
+
+async function postNewUserData(data) {
+  console.log(data);
+  try {
+    const responce = useFetch({
+      mainURL: "user_database",
+      method: "POST",
+      header: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+    const res = await responce;
+    console.log(res);
+  } catch (err) {
+    console.log(err);
+  }
+}
 
 // Editing Data
 function editingData(state, action) {
@@ -153,6 +177,15 @@ function fetchingCurrentUserData(dispatch) {
   dispatch({ type: "current_user_update", payload: data });
 }
 
+//fetching All users data
+async function fetchingAllUsersData(dispatch) {
+  const data = await useFetch({ mainURL: "user_database", method: "GET" });
+  console.log(data);
+  dispatch({ type: "add_user", payload: data });
+  console.log("users added");
+  fetchingCurrentUserData(dispatch);
+}
+
 // Fetching data for initial use
 async function fetchProductsData(dispatch) {
   const data = await useFetch({ mainURL: "products", method: "GET" });
@@ -164,7 +197,7 @@ export const DataContextProvider = ({ children }) => {
 
   useEffect(() => {
     fetchProductsData(dispatch);
-    fetchingCurrentUserData(dispatch);
+    fetchingAllUsersData(dispatch);
   }, []);
 
   return (

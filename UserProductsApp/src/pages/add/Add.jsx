@@ -1,9 +1,12 @@
 import { useProductContext } from "../../contextAPI/contextAPI";
 import { useEffect, useState } from "react";
 import "./Add.css";
+import { useDispatch, useSelector } from "react-redux";
+import { addProduct } from "../../features/products/product";
 
 export default function Add() {
-  const { state, dispatch } = useProductContext();
+  // const { state, dispatch } = useProductContext();
+  const dispatch = useDispatch();
 
   const [productName, setProductName] = useState("");
   const [productDescription, setProductDescription] = useState("");
@@ -25,12 +28,13 @@ export default function Add() {
       quantity: productQuantity,
     };
 
-    dispatch({ type: "add", payload: newObject });
+    dispatch(addProduct(newObject));
+    // dispatch({ type: "add", payload: newObject });
   }
 
-  useEffect(() => {
-    console.log(state);
-  }, [state]);
+  // useEffect(() => {
+  //   console.log(state);
+  // }, [state]);
 
   return (
     <div>

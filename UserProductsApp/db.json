@@ -2,7 +2,7 @@
   "products": [
     {
       "id": "1760527122402",
-      "name": "Timon Estes",
+      "name": "Timon Estes gfdf",
       "description": "Non ut eu incididunt",
       "price": "146",
       "quantity": "260"
@@ -11,13 +11,15 @@
   "user_database": [
     {
       "user_name": "Jairaj rathod",
-      "emial": "rathodjairaj805@gmail.com",
-      "password": "asdfghjkl"
+      "email": "rathodjairaj805@gmail.com",
+      "password": "asdfghjkl",
+      "id": "de19"
     },
     {
       "user_name": "piyush",
-      "emial": "piyush69@gmail.com",
-      "password": "piyush69"
+      "email": "piyush69@gmail.com",
+      "password": "piyush69",
+      "id": "65d6"
     }
   ]
 }

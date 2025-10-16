@@ -1,6 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import "./Card.css";
 import { useProductContext } from "../../contextAPI/contextAPI";
+import { useDispatch } from "react-redux";
+import { deleteProduct } from "../../features/products/product";
 
 export default function Card({
   id = "",
@@ -10,10 +12,12 @@ export default function Card({
   quantity = "",
 }) {
   const navigate = useNavigate();
-  const { dispatch } = useProductContext();
+  // const { dispatch } = useProductContext();
+  const dispatch = useDispatch();
 
   function deleteCurrentProductData() {
-    dispatch({ type: "delete", payload: { id, dispatch } });
+    // dispatch({ type: "delete", payload: { id, dispatch } });
+    dispatch(deleteProduct(id));
   }
 
   return (
