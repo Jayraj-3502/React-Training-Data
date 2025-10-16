@@ -1,25 +1,23 @@
 {
   "products": [
     {
-      "product_id": "1",
-      "product_name": "product 1",
-      "product_price": "50",
-      "product_quantity": "20",
-      "product_description": "This is product 1 description."
+      "id": "1760527122402",
+      "name": "Timon Estes",
+      "description": "Non ut eu incididunt",
+      "price": "146",
+      "quantity": "260"
+    }
+  ],
+  "user_database": [
+    {
+      "user_name": "Jairaj rathod",
+      "emial": "rathodjairaj805@gmail.com",
+      "password": "asdfghjkl"
     },
     {
-      "product_id": "2",
-      "product_name": "product 2",
-      "product_price": "40",
-      "product_quantity": "10",
-      "product_description": "This is product 2 description."
-    },
-    {
-      "product_id": "3",
-      "product_name": "product 3",
-      "product_price": "70",
-      "product_quantity": "50",
-      "product_description": "This is product 3 description."
+      "user_name": "piyush",
+      "emial": "piyush69@gmail.com",
+      "password": "piyush69"
     }
   ]
 }

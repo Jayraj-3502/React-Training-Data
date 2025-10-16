@@ -1,17 +1,21 @@
 export async function useFetch({
-  baseURL = "",
   mainURL = "",
   method = "GET",
   header = { "Content-Type": "application/json" },
-  body = {},
+  body = null,
 }) {
-  const responce = await fetch(`${baseURL}/${mainURL}`, {
-    method: method,
-    body: body,
-    headers: header,
-  });
+  try {
+    const responce = await fetch(`http://localhost:3000/${mainURL}`, {
+      method,
+      header: {
+        ...header,
+      },
+      body,
+    });
 
-  const data = await responce.json();
-
-  return data;
+    const data = await responce.json();
+    return data;
+  } catch (err) {
+    return err;
+  }
 }
