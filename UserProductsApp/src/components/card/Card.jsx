@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
 import "./Card.css";
-import { useProductContext } from "../../contextAPI/contextAPI";
 import { useDispatch } from "react-redux";
 import { deleteProduct } from "../../features/products/product";
 
@@ -16,7 +15,7 @@ export default function Card({
   const dispatch = useDispatch();
 
   function deleteCurrentProductData() {
-    // dispatch({ type: "delete", payload: { id, dispatch } });
+    console.log(id);
     dispatch(deleteProduct(id));
   }
 

@@ -1,6 +1,9 @@
 import { useState } from "react";
 import "./Signup.css";
 import { useProductContext } from "../../../contextAPI/contextAPI";
+import { useDispatch, useSelector } from "react-redux";
+import { addUser } from "../../../features/users/user";
+import { useNavigate } from "react-router-dom";
 
 export default function Signup() {
   const [signupData, setSignupData] = useState({
@@ -10,25 +13,30 @@ export default function Signup() {
     confirmPassword: "",
   });
 
-  const { state, dispatch } = useProductContext();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const users = useSelector((state) => state.user.users);
 
   function handleOnSubmit(event) {
     event.preventDefault();
-    const exist =
-      state.users.find((item) => {
-        return item.email === signupData.email;
-      }) ?? false;
+    const present = users.find((user) => user.email === signupData.email);
 
-    console.log(exist);
-
-    if (!exist) {
-      console.log("his is running");
-      console.log(signupData.password, signupData.confirmPassword);
-      if (signupData.password === signupData.confirmPassword) {
-        dispatch({ target: "post_user", payload: signupData });
-        console.log("this is calless");
-      }
+    if (!present) {
+      dispatch(addUser(signupData));
+      resetData();
+      navigate("/");
+    } else {
+      alert("User Already Present");
     }
+  }
+
+  function resetData() {
+    setSignupData({
+      name: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+    });
   }
 
   return (

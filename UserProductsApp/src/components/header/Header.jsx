@@ -28,14 +28,12 @@ export default function Header() {
           <Link to={"/contact"} className="nav-list_item">
             Contact
           </Link>
-          <li
-            className="nav-list_item"
-            onClick={() => {
-              handleLogout();
-            }}
-          >
-            Logout
-          </li>
+          <Link className="nav-list_item" to={"/login"}>
+            Login
+          </Link>
+          <Link className="nav-list_item" to={"/signup"}>
+            Signup
+          </Link>
         </ul>
       </div>
     </nav>

@@ -1,46 +1,37 @@
 import { useEffect, useState } from "react";
 import "./Login.css";
-import { useProductContext } from "../../../contextAPI/contextAPI";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { setCurrentUser, getCurrentUser } from "../../../features/users/user";
 
 export default function Login() {
   const [userData, setUserData] = useState({ email: "", password: "" });
-  const { state, dispatch } = useProductContext();
+  const dispatch = useDispatch();
+  const currentUser = useSelector((state) => state.user.currentUser);
+  const usersData = useSelector((state) => state.user.users);
   const navigate = useNavigate();
 
   function onHandleSubmit(event) {
     event.preventDefault();
-
-    console.log(state);
     console.log(userData);
+    checkingUser();
+    setUserData({ email: "", password: "" });
+  }
 
-    const finded = state.users.find((item) => {
-      console.log("this is running");
-      return (
-        item.email === userData.email && item.password === userData.password
-      );
-    });
-
-    console.log(finded);
-
-    if (finded) {
-      dispatch({
-        type: "current_user_update",
-        payload: userData,
-      });
-      console.log("this");
+  function checkingUser() {
+    const result = usersData.find(
+      (user) =>
+        user.email === userData.email && user.password === userData.password
+    );
+    if (result) {
+      dispatch(setCurrentUser(result));
       navigate("/");
-      return;
-    } else {
-      console.log("loginfailed");
     }
   }
 
   useEffect(() => {
-    // if (state.currentUserData === null) {
-    //   navigate("/");
-    // }
-  }, [state]);
+    dispatch(getCurrentUser());
+  }, []);
 
   return (
     <div>

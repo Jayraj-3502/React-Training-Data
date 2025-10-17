@@ -2,32 +2,25 @@ import { useEffect, useState } from "react";
 import "./Edit.css";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { selectProduct } from "../../features/products/product";
-// import { useProductContext } from "../../contextAPI/contextAPI";
-// import { useFetch } from "../../data/fetchData";
+// import { selectProduct, updateProduct } from "../../features/products/product";
 
 export default function Edit() {
-  // const { state, dispatch } = useProductContext();
   const currentProductId = useParams();
   const dispatch = useDispatch();
-
-  const [currentData, setCurrentData] = useState({
-    id: "",
-    name: "",
-    description: "",
-    price: "",
-    quantity: "",
-  });
+  const productData = useSelector((state) => state.product.currentProduct);
+  const [currentData, setCurrentData] = useState(productData);
 
   function onHandleSubmit(event) {
     event.preventDefault();
+    console.log(currentData);
+    // dispatch(updateProduct(currentData));
   }
 
   useEffect(() => {
-    console.log(currentData);
-    const data = dispatch(selectProduct(currentProductId));
-    console.log(data);
-  }, []);
+    // dispatch(selectProduct(currentProductId.id));
+    console.log(productData);
+    setCurrentData(productData);
+  }, [productData]);
 
   return (
     <div>
