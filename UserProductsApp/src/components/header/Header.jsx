@@ -1,10 +1,13 @@
+import { useDispatch } from "react-redux";
 import { useProductContext } from "../../contextAPI/contextAPI";
 import "./Header.css";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, replace } from "react-router-dom";
+import { removeCurrentUser } from "../../features/users/user";
 
 export default function Header() {
   const navigate = useNavigate();
   // const { state, dispatch } = useProductContext();
+  const dispatch = useDispatch();
 
   function handleLogout() {
     // dispatch({ target: "remove_current_user", payload: {} });
@@ -28,11 +31,15 @@ export default function Header() {
           <Link to={"/contact"} className="nav-list_item">
             Contact
           </Link>
-          <Link className="nav-list_item" to={"/login"}>
-            Login
-          </Link>
-          <Link className="nav-list_item" to={"/signup"}>
-            Signup
+          <Link
+            className="nav-list_item"
+            to={"/auth"}
+            replace
+            onClick={() => {
+              dispatch(removeCurrentUser({}));
+            }}
+          >
+            Log out
           </Link>
         </ul>
       </div>

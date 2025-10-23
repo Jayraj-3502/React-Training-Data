@@ -3,38 +3,28 @@ import { useEffect, useState } from "react";
 import "./Add.css";
 import { useDispatch, useSelector } from "react-redux";
 import { addProduct } from "../../features/products/product";
+import { useNavigate } from "react-router-dom";
 
 export default function Add() {
   // const { state, dispatch } = useProductContext();
   const dispatch = useDispatch();
-
-  const [productName, setProductName] = useState("");
-  const [productDescription, setProductDescription] = useState("");
-  const [productPrice, setProductPrice] = useState("");
-  const [productQuantity, setProductQuantity] = useState("");
+  const [newProductData, setNewProductData] = useState({
+    name: "",
+    description: "",
+    price: "",
+    quantity: "",
+  });
+  const navigate = useNavigate();
 
   function onHandleSubmit(event) {
     event.preventDefault();
-    console.log(productName);
-    console.log(productDescription);
-    console.log(productPrice);
-    console.log(productQuantity);
+    console.log(newProductData);
 
-    const newObject = {
-      id: Date.now().toString(),
-      name: productName,
-      description: productDescription,
-      price: productPrice,
-      quantity: productQuantity,
-    };
+    dispatch(addProduct(newProductData));
+    navigate("/");
 
-    dispatch(addProduct(newObject));
     // dispatch({ type: "add", payload: newObject });
   }
-
-  // useEffect(() => {
-  //   console.log(state);
-  // }, [state]);
 
   return (
     <div>
@@ -50,8 +40,13 @@ export default function Add() {
           <input
             type="text"
             name="name"
-            value={productName}
-            onChange={(event) => setProductName(event.target.value)}
+            value={newProductData.name}
+            onChange={(event) =>
+              setNewProductData((prev) => ({
+                ...prev,
+                name: event.target.value,
+              }))
+            }
           />
         </div>
         <div>
@@ -59,8 +54,13 @@ export default function Add() {
           <input
             type="text"
             name="description"
-            value={productDescription}
-            onChange={(event) => setProductDescription(event.target.value)}
+            value={newProductData.description}
+            onChange={(event) =>
+              setNewProductData((prev) => ({
+                ...prev,
+                description: event.target.value,
+              }))
+            }
           />
         </div>
         <div>
@@ -68,8 +68,13 @@ export default function Add() {
           <input
             type="number"
             name="price"
-            value={productPrice}
-            onChange={(event) => setProductPrice(event.target.value)}
+            value={newProductData.price}
+            onChange={(event) =>
+              setNewProductData((prev) => ({
+                ...prev,
+                price: event.target.value,
+              }))
+            }
           />
         </div>
         <div>
@@ -77,8 +82,13 @@ export default function Add() {
           <input
             type="number"
             name="quantity"
-            value={productQuantity}
-            onChange={(event) => setProductQuantity(event.target.value)}
+            value={newProductData.quantity}
+            onChange={(event) =>
+              setNewProductData((prev) => ({
+                ...prev,
+                quantity: event.target.value,
+              }))
+            }
           />
         </div>
         <div>

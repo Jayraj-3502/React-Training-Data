@@ -1,10 +1,15 @@
 import { useEffect, useState } from "react";
 import "./Edit.css";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import {
+  gettingCurrentProductData,
+  updateProduct,
+} from "../../features/products/product";
 // import { selectProduct, updateProduct } from "../../features/products/product";
 
 export default function Edit() {
+  const navigate = useNavigate();
   const currentProductId = useParams();
   const dispatch = useDispatch();
   const productData = useSelector((state) => state.product.currentProduct);
@@ -13,11 +18,15 @@ export default function Edit() {
   function onHandleSubmit(event) {
     event.preventDefault();
     console.log(currentData);
-    // dispatch(updateProduct(currentData));
+    dispatch(updateProduct(currentData));
+    navigate("/");
   }
 
   useEffect(() => {
-    // dispatch(selectProduct(currentProductId.id));
+    dispatch(gettingCurrentProductData(currentProductId.id));
+  }, []);
+
+  useEffect(() => {
     console.log(productData);
     setCurrentData(productData);
   }, [productData]);
@@ -82,7 +91,7 @@ export default function Edit() {
           />
         </div>
         <div>
-          <button type="submit">Submit Data</button>
+          <button type="submit">Done Editing</button>
         </div>
       </form>
     </div>

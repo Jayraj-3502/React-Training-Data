@@ -2,7 +2,11 @@ import { useEffect, useState } from "react";
 import "./Login.css";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { setCurrentUser, getCurrentUser } from "../../../features/users/user";
+import {
+  setCurrentUser,
+  getCurrentUser,
+  gettingUsersData,
+} from "../../../features/users/user";
 
 export default function Login() {
   const [userData, setUserData] = useState({ email: "", password: "" });
@@ -13,12 +17,14 @@ export default function Login() {
 
   function onHandleSubmit(event) {
     event.preventDefault();
-    console.log(userData);
+    console.log(usersData);
+    console.log(currentUser);
     checkingUser();
     setUserData({ email: "", password: "" });
   }
 
   function checkingUser() {
+    console.log(userData);
     const result = usersData.find(
       (user) =>
         user.email === userData.email && user.password === userData.password
@@ -30,8 +36,16 @@ export default function Login() {
   }
 
   useEffect(() => {
+    dispatch(gettingUsersData());
     dispatch(getCurrentUser());
+    console.log("This is running");
   }, []);
+
+  useEffect(() => {
+    if (currentUser) {
+      navigate("/");
+    }
+  }, [dispatch]);
 
   return (
     <div>
