@@ -1,8 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./Signup.css";
 import { useProductContext } from "../../../contextAPI/contextAPI";
 import { useDispatch, useSelector } from "react-redux";
-import { addUser } from "../../../features/users/user";
+import {
+  addUser,
+  getCurrentUser,
+  gettingUsersData,
+} from "../../../features/users/user";
 import { useNavigate } from "react-router-dom";
 
 export default function Signup() {
@@ -16,6 +20,7 @@ export default function Signup() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const users = useSelector((state) => state.user.users);
+  const currentUser = useSelector((state) => state.user.currentUser);
 
   function handleOnSubmit(event) {
     event.preventDefault();
@@ -38,6 +43,19 @@ export default function Signup() {
       confirmPassword: "",
     });
   }
+
+  useEffect(() => {
+    dispatch(gettingUsersData());
+    dispatch(getCurrentUser());
+    console.log("This is running");
+  }, []);
+
+  useEffect(() => {
+    // dispatch();
+    if (currentUser) {
+      navigate("/");
+    }
+  }, [dispatch]);
 
   return (
     <div>

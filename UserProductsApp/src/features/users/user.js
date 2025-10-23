@@ -1,17 +1,30 @@
-import { createSlice, nanoid } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, nanoid } from "@reduxjs/toolkit";
+import axios from "axios";
 import { use } from "react";
 
 const initialState = {
-  users: [
-    {
-      id: 45464,
-      name: "Jai",
-      email: "rathodjairaj805@gmail.com",
-      password: "asdasd",
-    },
-  ],
+  users: [],
   currentUser: {},
 };
+
+export const gettingUsersData = createAsyncThunk(
+  "user/gettingUsersData",
+  async () => {
+    try {
+      const responce = await axios.get("http://localhost:3000/users");
+      console.log(responce.data);
+      return responce.data;
+    } catch (err) {}
+  }
+);
+
+export const addUser = createAsyncThunk("user/addUser", async (data) => {
+  data.id = nanoid();
+  try {
+    const responce = await axios.post(`http://localhost:3000/users`, data);
+    return { status: responce.status, data: responce.data };
+  } catch (err) {}
+});
 
 function settingCurrentUser(state, data) {
   try {
@@ -38,11 +51,6 @@ export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    addUser: (state, action) => {
-      const user = { id: nanoid(), ...action.payload };
-      state.users.push(user);
-      settingCurrentUser(state, action.payload);
-    },
     setCurrentUser: (state, action) => {
       settingCurrentUser(state, action.payload);
     },
@@ -51,13 +59,36 @@ export const userSlice = createSlice({
     },
     removeCurrentUser: (state, action) => {
       state.currentUser = {};
-      this.setCurrentUser(action.payload);
+      settingCurrentUser(state, action.payload);
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      // Getting users data on initial launch
+      .addCase(gettingUsersData.pending, (state, action) => {
+        console.log("pending");
+      })
+      .addCase(gettingUsersData.fulfilled, (state, action) => {
+        state.users = action.payload;
+        // console.log(action.payload);
+      })
+      .addCase(gettingUsersData.rejected, (state, action) => {
+        console.log("rejected");
+      })
+
+      //Adding user in database
+      .addCase(addUser.pending, (state, action) => {})
+      .addCase(addUser.fulfilled, (state, action) => {
+        if (action.payload.status === 201) {
+          settingCurrentUser(state, action.payload.data);
+          state.users.push(action.payload.data);
+        }
+      })
+      .addCase(addUser.rejected, (state, action) => {});
   },
 });
 
 export const {
-  addUser,
   addCurrentUser,
   removeCurrentUser,
   getCurrentUser,

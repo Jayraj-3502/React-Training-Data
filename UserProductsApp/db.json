@@ -1,11 +1,25 @@
 {
   "products": [
     {
-      "id": "1760701925307",
-      "name": "Hamish Luna",
-      "description": "Voluptate voluptas c",
-      "price": "702",
-      "quantity": "171"
+      "id": "i0tXX0eBR8brMtOFoaQZu",
+      "name": "Ann Mckee",
+      "description": "Similique enim ipsum",
+      "price": "846",
+      "quantity": "909"
+    },
+    {
+      "id": "rWlLpYpm5hcPnVZe5IB8N",
+      "name": "Marsden Oneill",
+      "description": "Sit ratione duis dol",
+      "price": "672",
+      "quantity": "323"
+    },
+    {
+      "id": "7zzOWqAF8smErVW5TXt-n",
+      "name": "Kane Farrell",
+      "description": "Quos perferendis rer",
+      "price": "848",
+      "quantity": "674"
     }
   ],
   "users": [
@@ -16,10 +30,28 @@
       "id": "de19"
     },
     {
-      "user_name": "piyush",
-      "email": "piyush69@gmail.com",
-      "password": "piyush69",
-      "id": "65d6"
+      "id": "cpV_YAXJ26_-ObHrt2ms0",
+      "email": "texyqudozy@mailinator.com",
+      "password": "Pa$$w0rd!",
+      "confirmPassword": "Pa$$w0rd!"
+    },
+    {
+      "id": "c-vjKlwp6wNN1UchDNFLI",
+      "email": "wohi@mailinator.com",
+      "password": "Pa$$w0rd!",
+      "confirmPassword": "Pa$$w0rd!"
+    },
+    {
+      "id": "gSvdNpxCZec9c3Rf4KQlc",
+      "email": "gobyku@mailinator.com",
+      "password": "Pa$$w0rd!",
+      "confirmPassword": "Pa$$w0rd!"
+    },
+    {
+      "id": "-q2UNsttxitLW1kE_HIhy",
+      "email": "kemevicibo@mailinator.com",
+      "password": "Pa$$w0rd!",
+      "confirmPassword": "Pa$$w0rd!"
     }
   ]
 }

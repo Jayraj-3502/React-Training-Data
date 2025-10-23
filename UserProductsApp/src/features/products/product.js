@@ -28,10 +28,10 @@ export const getProducts = createAsyncThunk("product/getProducts", async () => {
 
 export const updateProduct = createAsyncThunk(
   "product/updateProduct",
-  async (id, data) => {
+  async (data) => {
     try {
       const responce = await axios.put(
-        `http://localhost:3000/products/${id}`,
+        `http://localhost:3000/products/${data.id}`,
         data
       );
       console.log(responce.data);
@@ -40,9 +40,24 @@ export const updateProduct = createAsyncThunk(
   }
 );
 
+export const gettingCurrentProductData = createAsyncThunk(
+  "product/gettingCurrentProductData",
+  async (id) => {
+    try {
+      const responce = await axios.get(`http://localhost:3000/products/${id}`);
+      console.log(responce);
+      return responce.data;
+    } catch (err) {
+      console.log(err);
+      return err;
+    }
+  }
+);
+
 export const addProduct = createAsyncThunk(
   "product/addProduct",
   async (data) => {
+    data.id = nanoid();
     try {
       await axios.post("http://localhost:3000/products", data);
       return data;
@@ -76,16 +91,7 @@ export const productSlice = createSlice({
 
       // Updating the data
       .addCase(updateProduct.pending, (state) => {})
-      .addCase(updateProduct.fulfilled, (state, action) => {
-        state.products = state.products.map((product) => {
-          if (product.id === action.payload.id) {
-            console.log(true);
-            return action.payload;
-          } else {
-            product;
-          }
-        });
-      })
+      .addCase(updateProduct.fulfilled, (state, action) => {})
       .addCase(updateProduct.rejected, (state, action) => {})
 
       // Deleting the data
@@ -99,10 +105,15 @@ export const productSlice = createSlice({
 
       // Adding the data
       .addCase(addProduct.pending, (state) => {})
-      .addCase(addProduct.fulfilled, (state, action) => {
-        state.products.push(action.payload);
+      .addCase(addProduct.fulfilled, (state, action) => {})
+      .addCase(addProduct.rejected, (state, action) => {})
+
+      // Getting the current product data
+      .addCase(gettingCurrentProductData.pending, (state) => {})
+      .addCase(gettingCurrentProductData.fulfilled, (state, action) => {
+        state.currentProduct = action.payload;
       })
-      .addCase(addProduct.rejected, (state, action) => {});
+      .addCase(gettingCurrentProductData.rejected, (state, action) => {});
   },
 });
 
