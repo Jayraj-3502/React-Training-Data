@@ -1,36 +1,147 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, current } from "@reduxjs/toolkit";
+import axios from "axios";
 
 const initialState = {
   users: [],
   currentUser: {},
+  userExist: false,
 };
+
+// export const getUsersDetails = createAsyncThunk(
+//   "user/getUsersDetails",
+//   async () => {
+//     const responce = await axios.get("http://localhost:3000/users");
+//     console.log(responce.data);
+//     return responce.data;
+//   }
+// );
+
+// export const addNewUser = createAsyncThunk("user/addNewUser", async (data) => {
+//   const responce = await axios.post("http://localhost:3000/users", data);
+//   return responce.data;
+// });
+
+// export const removeUser = createAsyncThunk("user/removeUser", async () => {
+//   const responce = await axios.delete(`http://localhost:3000/users/${id}`);
+//   return responce.data;
+// });
+
+// export const updateUser = createAsyncThunk(
+//   "user/updateUser",
+//   async (id, data) => {
+//     const responce = await axios.put(`http://localhost:3000/users/${id}`, data);
+//   }
+// );
+
+// export const addWatchList = createAsyncThunk(
+//   "user/addWatchList",
+//   async (id, data) => {
+//     const responce = await axios.post(
+//       `http://localhost:3000/users/${id}`,
+//       data
+//     );
+//   }
+// );
+
+function setLocalData(data) {
+  localStorage.setItem("mmaCurrentUser", JSON.stringify(data));
+}
+
+function getLocalData() {
+  const responce = JSON.parse(localStorage.getItem("mmaCurrentUser"));
+  return responce;
+}
 
 export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    addNewUser: (state, action) => {},
-    addCurrentUser: (state, action) => {},
-    removeCurrentUser: (state, action) => {},
-    updateWatchList: (state, action) => {
-      state.currentUser.watchList.push(action.payload);
-      state.users = state.users.map((user) => {
-        if (user.id === state.currentUser.id) {
-          user.watchList.push(action.payload);
-          return user;
-        }
-        return user;
-      });
+    setCurrentUser: (state, action) => {
+      state.currentUser = action.payload;
+      state.userExist = true;
+      setLocalData(action.payload);
     },
-    updateFavorites: (state, action) => {
-      state.currentUser.favorites.push(action.payload);
-      state.users = state.users.map((user) => {
-        if (user.id === state.currentUser.id) {
-          user.favorites.push(action.payload);
-          return user;
+    getCurrentUser: (state, action) => {
+      const res = getLocalData();
+      if (res) {
+        state.currentUser = res;
+        state.userExist = true;
+      }
+    },
+    removeCurrentUser: (state, action) => {
+      state.users = state.users.map((item) => {
+        if (item.id === state.currentUser.id) {
+          return state.currentUser;
+        } else {
+          return item;
         }
-        return user;
       });
+      localStorage.setItem("mmaUsersData", JSON.stringify(state.users));
+      state.currentUser = {};
+      state.userExist = false;
+      setLocalData("");
+    },
+    addWatchList: (state, action) => {
+      state.currentUser.watch_later.find((item) => {
+        if (item.movieId === action.payload.movieId) {
+          return true;
+        }
+      }) || state.currentUser.watch_later.push(action.payload);
+      setLocalData(state.currentUser);
+    },
+    removeWatchList: (state, action) => {
+      state.currentUser.watch_later = state.currentUser.watch_later.filter(
+        (item) => {
+          if (item.movieId !== action.payload) {
+            return item;
+          }
+        }
+      );
+      setLocalData(state.currentUser);
+    },
+    addFavoritesList: (state, action) => {
+      state.currentUser.favirout_list.find((item) => {
+        if (item.movieId === action.payload.movieId) {
+          return true;
+        }
+      }) || state.currentUser.favirout_list.push(action.payload);
+      setLocalData(state.currentUser);
+    },
+    removeFavrouteList: (state, action) => {
+      state.currentUser.favirout_list = state.currentUser.favirout_list.filter(
+        (item) => {
+          if (item.movieId !== action.payload) {
+            return item;
+          }
+        }
+      );
+      setLocalData(state.currentUser);
+    },
+    getUsersDetails: (state, action) => {
+      const data = JSON.parse(localStorage.getItem("mmaUsersData"));
+      console.log(data);
+      if (data) {
+        state.users = data;
+      } else {
+        state.users = [];
+      }
+    },
+    addNewUser: (state, action) => {
+      state.users.push(action.payload);
+      localStorage.setItem("mmaUsersData", JSON.stringify(state.users));
     },
   },
 });
+
+export const userReducer = userSlice.reducer;
+export const {
+  setCurrentUser,
+  getCurrentUser,
+  removeCurrentUser,
+  addFavoritesList,
+  addWatchList,
+  addNewUser,
+  getUsersDetails,
+  removeFavrouteList,
+  removeWatchList,
+} = userSlice.actions;

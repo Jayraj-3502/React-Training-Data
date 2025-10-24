@@ -1,6 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getCurrentUser,
+  getUsersDetails,
+  setCurrentUser,
+} from "../../feature/users";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const usersData = useSelector((state) => state.user.users);
+  const userExist = useSelector((state) => state.user.userExist);
   const [userDetails, setUserDetails] = useState({
     email: "",
     password: "",
@@ -8,8 +19,33 @@ export default function Login() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(EventTarget.target);
+    console.log(userDetails.email);
+    console.log(usersData);
+    console.log("Sumited Data");
+    const exist = usersData.find((data) => {
+      if (
+        data.email === userDetails.email &&
+        data.password === userDetails.password
+      ) {
+        return true;
+      }
+    });
+    if (exist) {
+      console.log("success");
+      dispatch(setCurrentUser(exist));
+    }
   };
+
+  useEffect(() => {
+    dispatch(getUsersDetails());
+    dispatch(getCurrentUser());
+  }, []);
+
+  useEffect(() => {
+    if (userExist) {
+      navigate("/");
+    }
+  }, [userExist]);
 
   return (
     <>
@@ -33,6 +69,8 @@ export default function Login() {
                   email: event.target.value,
                 }));
               }}
+              className="border outline-none px-3 py-1.5 rouneded-full"
+              required
             />
           </div>
 
@@ -48,12 +86,16 @@ export default function Login() {
                   password: event.target.value,
                 }));
               }}
-              className="border  outline-none"
+              className="border outline-none px-3 py-1.5 rouneded-full"
+              required
             />
           </div>
         </div>
         <div>
-          <button type="submit" className="cursor-pointer">
+          <button
+            type="submit"
+            className="cursor-pointer border px-3 py-1.5 rounded-full"
+          >
             Login
           </button>
         </div>

@@ -3,39 +3,29 @@ import { FaHeart, FaStar } from "react-icons/fa";
 import { CiBookmarkPlus } from "react-icons/ci";
 import { IoIosInformationCircle } from "react-icons/io";
 import { useDispatch } from "react-redux";
-import { addFavoritesList, addWatchList } from "../feature/users";
-import { useState } from "react";
+import {
+  addFavoritesList,
+  addWatchList,
+  removeFavrouteList,
+} from "../feature/users";
+import { useEffect } from "react";
 
-export default function MovieCard({
+export default function FavrouteCard({
   imageURL = "",
   ratting = "0.0",
   movieName = "",
   movieId = "",
-  userExist = false,
 }) {
   const dispatch = useDispatch();
 
-  function watchListUpdater() {
-    dispatch(addWatchList({ imageURL, ratting, movieName, movieId }));
+  function removeFromFavroute() {
+    dispatch(removeFavrouteList(movieId));
   }
 
-  function favrouteListUpdater() {
-    dispatch(addFavoritesList({ imageURL, ratting, movieName, movieId }));
-  }
+  useEffect(() => {}, [dispatch]);
 
   return (
-    <div className="min-w-fit w-[200px] max-w-[200px] rounded-full h-fit">
-      {/* This is book mark icon code */}
-      <div>
-        <CiBookmarkPlus
-          className="text-4xl p-0 relative top-9 bg-[#000000aa] cursor-pointer"
-          onClick={() => {
-            watchListUpdater();
-          }}
-          // onClick
-        />
-      </div>
-
+    <div className="min-w-fit w-[200px] max-w-[200px] rounded-full">
       {/* This is poster of the movie  */}
       <div>
         <img
@@ -55,24 +45,18 @@ export default function MovieCard({
           <span>{ratting}</span>
         </div>
         {/* This is movie Name */}
-        <div>{movieName.slice(0, 20)}...</div>
+        <div>{movieName}</div>
 
         {/* This is buttons for faviroute and more info  */}
         <div className="flex flex-row gap-2 justify-center">
           <button
-            className="flex flex-row gap-2 justify-center items-center px-3 pt-3 pb-2 rounded-full bg-black cursor-pointer"
+            className="flex flex-row gap-2 justify-center items-center px-5 pt-2 pb-2 rounded-full font-bold bg-red-500 cursor-pointer"
             onClick={() => {
-              favrouteListUpdater();
+              removeFromFavroute();
             }}
           >
-            <FaHeart className="text-2xl text-red-500" />
+            Remove
           </button>
-          <Link
-            to={`/details/${movieId}`}
-            className="flex flex-row gap-2 justify-center items-center px-3 pt-3 pb-2 rounded-full bg-black cursor-pointer"
-          >
-            <IoIosInformationCircle className="text-2xl text-white" />
-          </Link>
         </div>
       </div>
     </div>
