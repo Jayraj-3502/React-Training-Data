@@ -1,0 +1,8 @@
+Here is your key: 96241972
+
+Please append it to all of your API requests,
+
+OMDb API: http://www.omdbapi.com/?i=tt3896198&apikey=96241972
+
+Click the following URL to activate your key: http://www.omdbapi.com/apikey.aspx?VERIFYKEY=f17e9818-b30c-48d4-9194-60e4aac8de40
+If you did not make this request, please disregard this email.
