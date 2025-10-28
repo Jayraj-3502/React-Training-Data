@@ -117,6 +117,23 @@ export const userSlice = createSlice({
       );
       setLocalData(state.currentUser);
     },
+    addRecentlyViewed: (state, action) => {
+      state.currentUser.recently_viewed.find((item) => {
+        if (item.movieId === action.payload.movieId) {
+          return true;
+        }
+      }) || state.currentUser.recently_viewed.push(action.payload);
+      setLocalData(state.currentUser);
+    },
+    removeRecentlyViewed: (state, action) => {
+      state.currentUser.recently_viewed =
+        state.currentUser.recently_viewed.filter((item) => {
+          if (item.movieId !== action.payload) {
+            return item;
+          }
+        });
+      setLocalData(state.currentUser);
+    },
     getUsersDetails: (state, action) => {
       const data = JSON.parse(localStorage.getItem("mmaUsersData"));
       console.log(data);
@@ -144,4 +161,6 @@ export const {
   getUsersDetails,
   removeFavrouteList,
   removeWatchList,
+  addRecentlyViewed,
+  removeRecentlyViewed,
 } = userSlice.actions;

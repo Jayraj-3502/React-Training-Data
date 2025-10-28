@@ -1,8 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Loader } from "./export";
 import { useEffect } from "react";
-import WatchLaterCard from "../components/WatchLaterCard";
-import FavrouteCard from "../components/FavrouteCard";
+import CommanCard from "../components/CommanCard";
+import {
+  removeFavrouteList,
+  removeRecentlyViewed,
+  removeWatchList,
+} from "../feature/users";
 
 export default function Profile() {
   const dispatch = useDispatch();
@@ -14,57 +18,86 @@ export default function Profile() {
   return (
     <div className="pt-10 flex flex-col items-center">
       {!userExist ? (
-        <div className="text-5xl font-bold text-center flex flex-col gap-5">
+        <div className="text-5xl font-bold text-center flex flex-col gap-5 text-black dark:text-white">
           <div>User Not Logged In!</div>
           <div>Please login first.</div>
         </div>
       ) : (
         <div className="w-full">
-          <div className="text-3xl mb-10">
+          <div className="text-3xl mb-10 text-black dark:text-white">
             Hello{" "}
             <span className="text-5xl font-bold">{currentUser.userName}</span>
           </div>
-          <div className="mb-10">
-            <div className="mb-10">
-              <h4 className="text-4xl font-bold">Watch Later List</h4>
-            </div>
-            <div className="flex flex-row gap-1 overflow-y-hidden no-scrollbar">
-              {currentUser.watch_later.map((item) => {
-                const { imageURL, movieName, ratting, movieId } = item;
-                return (
-                  <WatchLaterCard
-                    key={movieId}
-                    imageURL={imageURL}
-                    movieName={movieName}
-                    ratting={ratting}
-                    movieId={movieId}
-                  />
-                );
-              })}
-            </div>
+
+          <div>
+            <CommonHeadingDesign display_text={"Watch Later List"} />
+            <CommonLoginFunction
+              not_found_text="Dont Have any movies in Watch Later List"
+              iterable_array={"watch_later"}
+              currentUser={currentUser}
+              removefunction={removeWatchList}
+            />
           </div>
 
           <div>
-            <div className="mb-10">
-              <h4 className="text-4xl font-bold">Favroute List</h4>
-            </div>
-            <div className="flex flex-row gap-1 overflow-y-hidden no-scrollbar">
-              {currentUser.favirout_list.map((item) => {
-                const { imageURL, movieName, ratting, movieId } = item;
-                return (
-                  <FavrouteCard
-                    key={movieId}
-                    imageURL={imageURL}
-                    movieName={movieName}
-                    ratting={ratting}
-                    movieId={movieId}
-                  />
-                );
-              })}
-            </div>
+            <CommonHeadingDesign display_text={"Favirout List"} />
+            <CommonLoginFunction
+              not_found_text="Dont Have any movies in Favroute List"
+              iterable_array={"favirout_list"}
+              currentUser={currentUser}
+              removefunction={removeFavrouteList}
+            />
+          </div>
+
+          <div>
+            <CommonHeadingDesign display_text={"Recently Viewed List"} />
+            <CommonLoginFunction
+              not_found_text="Dont Have any movies in Recently Viewed List"
+              iterable_array="recently_viewed"
+              currentUser={currentUser}
+              removefunction={removeRecentlyViewed}
+            />
           </div>
         </div>
       )}
+    </div>
+  );
+}
+
+function CommonLoginFunction({
+  not_found_text = "",
+  iterable_array = "",
+  currentUser = {},
+  removefunction = () => {},
+}) {
+  console.log(currentUser[iterable_array]);
+  return (
+    <div className="flex flex-row gap-1 overflow-y-hidden no-scrollbar">
+      {!currentUser[iterable_array]
+        ? not_found_text
+        : currentUser[iterable_array].map((item) => {
+            const { imageURL, movieName, ratting, movieId } = item;
+            return (
+              <CommanCard
+                key={movieId}
+                imageURL={imageURL}
+                movieName={movieName}
+                ratting={ratting}
+                movieId={movieId}
+                removefunction={removefunction}
+              />
+            );
+          })}
+    </div>
+  );
+}
+
+function CommonHeadingDesign({ display_text = "" }) {
+  return (
+    <div className="mb-10">
+      <h4 className="text-4xl font-bold text-black dark:text-white">
+        {display_text}
+      </h4>
     </div>
   );
 }

@@ -20,6 +20,7 @@ export default function Signup() {
     password: "",
     watch_later: [],
     favirout_list: [],
+    recently_viewed: [],
   });
 
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -55,52 +56,85 @@ export default function Signup() {
 
   return (
     <>
-      <h1 className="text-5xl font-bold">Signup Page</h1>
-      <form action="" onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="name"
-          placeholder="Enter User Name"
-          value={singupDetails.userName}
-          onChange={(event) =>
-            setSignupDetails((prev) => ({
-              ...prev,
-              userName: event.target.value,
-            }))
-          }
-        />
-        <input
-          type="email"
-          name="email"
-          placeholder="Enter your Email"
-          value={singupDetails.email}
-          onChange={(event) =>
-            setSignupDetails((prev) => ({
-              ...prev,
-              email: event.target.value,
-            }))
-          }
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Enter Password"
-          value={singupDetails.password}
-          onChange={(event) =>
-            setSignupDetails((prev) => ({
-              ...prev,
-              password: event.target.value,
-            }))
-          }
-        />
-        <input
-          type="password"
-          name="confirmPassword"
-          placeholder="Enter Confirm Password"
-          value={confirmPassword}
-          onChange={(event) => setConfirmPassword(event.target.value)}
-        />
-        <button type="submit">Submit</button>
+      <form
+        action=""
+        onSubmit={handleSubmit}
+        className="flex flex-col gap-3 w-fit max-w-[500px] mx-auto mt-10 p-3 py-6 text-black dark:text-white border rounded-lg text-center"
+      >
+        <h1 className="text-3xl font-bold mb-3">Signup</h1>
+        <div className="flex flex-col gap-3 ">
+          <input
+            type="text"
+            name="name"
+            placeholder="Enter User Name"
+            value={singupDetails.userName}
+            onChange={(event) =>
+              setSignupDetails((prev) => ({
+                ...prev,
+                userName: event.target.value,
+              }))
+            }
+            className="border outline-none px-3 py-1.5 rouneded-full"
+            required
+          />
+          <input
+            type="email"
+            name="email"
+            placeholder="Enter your Email"
+            value={singupDetails.email}
+            onChange={(event) =>
+              setSignupDetails((prev) => ({
+                ...prev,
+                email: event.target.value,
+              }))
+            }
+            className="border outline-none px-3 py-1.5 rouneded-full"
+            required
+          />
+          <input
+            type="password"
+            name="password"
+            placeholder="Enter Password"
+            value={singupDetails.password}
+            onChange={(event) =>
+              setSignupDetails((prev) => ({
+                ...prev,
+                password: event.target.value,
+              }))
+            }
+            className="border outline-none px-3 py-1.5 rouneded-full"
+            required
+          />
+          <input
+            type="password"
+            name="confirmPassword"
+            placeholder="Enter Confirm Password"
+            value={confirmPassword}
+            onChange={(event) => setConfirmPassword(event.target.value)}
+            className="border outline-none px-3 py-1.5 rouneded-full"
+            required
+          />
+        </div>
+        <div>
+          <button
+            type="submit"
+            className="cursor-pointer border px-3 py-1.5 rounded-full"
+          >
+            Submit
+          </button>
+        </div>
+        <hr />
+        <div>
+          <div>
+            Already have an account?{" "}
+            <span
+              className="text-blue-600 cursor-pointer"
+              onClick={() => navigate("/login")}
+            >
+              Login
+            </span>
+          </div>
+        </div>
       </form>
     </>
   );

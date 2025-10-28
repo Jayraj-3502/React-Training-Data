@@ -49,14 +49,14 @@ export default function Login() {
 
   return (
     <>
-      <h1>Login Page new</h1>
       <form
         onSubmit={(event) => {
           handleSubmit(event);
         }}
+        className="flex flex-col gap-3 w-fit max-w-[500px] mx-auto mt-10 p-3 py-6 text-black dark:text-white border rounded-lg text-center"
       >
-        <div className="">Login</div>
-        <div className="flex flex-col">
+        <div className="text-3xl font-bold mb-3">Login</div>
+        <div className="flex flex-col gap-3 ">
           <div>
             <input
               type="email"
@@ -98,6 +98,18 @@ export default function Login() {
           >
             Login
           </button>
+        </div>
+        <hr />
+        <div>
+          <div>
+            Don't have an account?{" "}
+            <span
+              className="text-blue-600 cursor-pointer"
+              onClick={() => navigate("/signup")}
+            >
+              Register
+            </span>
+          </div>
         </div>
       </form>
     </>

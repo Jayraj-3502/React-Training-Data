@@ -7,6 +7,7 @@ import Navigation from "./navigation/Navigation";
 import Layout from "./layout/Layout";
 import MovieCard from "../components/MovieCard";
 import Loader from "../components/Loder";
+import Search from "./Search";
 
 export {
   Home,
@@ -18,4 +19,5 @@ export {
   Layout,
   MovieCard,
   Loader,
+  Search,
 };
