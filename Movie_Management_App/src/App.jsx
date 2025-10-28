@@ -7,7 +7,9 @@ import {
   Signup,
   Details,
   Layout,
+  Search,
 } from "./pages/export";
+import AllMovies from "./pages/AllMovies";
 
 function App() {
   return (
@@ -19,6 +21,8 @@ function App() {
             <Route path="" element={<Home />} />
             <Route path="profile" element={<Profile />} />
             <Route path="details/:id" element={<Details />} />
+            <Route path="allmovies" element={<AllMovies />} />
+            <Route path="search/:keyword" element={<Search />} />
             <Route path="login" element={<Login />} />
             <Route path="signup" element={<Signup />} />
           </Route>
