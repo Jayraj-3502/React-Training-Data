@@ -6,6 +6,8 @@ import {
   setCurrentUser,
 } from "../../feature/users";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+
 
 export default function Login() {
   const navigate = useNavigate();
@@ -33,6 +35,8 @@ export default function Login() {
     if (exist) {
       console.log("success");
       dispatch(setCurrentUser(exist));
+    }else {
+      toast.error("Wrong Details");
     }
   };
 

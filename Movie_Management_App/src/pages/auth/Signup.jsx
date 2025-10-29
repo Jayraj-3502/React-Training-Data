@@ -7,6 +7,8 @@ import {
 } from "../../feature/users";
 import { useNavigate } from "react-router-dom";
 import { nanoid } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
+
 
 export default function Signup() {
   const navigate = useNavigate();
@@ -40,6 +42,8 @@ export default function Signup() {
         const newData = { ...singupDetails, id: nanoid() };
         dispatch(addNewUser(newData));
         dispatch(setCurrentUser(newData));
+      } else {
+        toast.error("Passwords are not same");
       }
     }
   }
