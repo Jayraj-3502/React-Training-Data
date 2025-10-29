@@ -7,6 +7,7 @@ const initialState = {
   discoverMovies: [],
   trendingMovies: [],
   genreMovies: [],
+  genreMoviesPageCount: 0,
   genreDetails: [],
   searchMovies: [],
   searchPageCount: 0,
@@ -224,6 +225,7 @@ export const movieSlice = createSlice({
       .addCase(getGenresMovies.pending, (state, action) => {})
       .addCase(getGenresMovies.fulfilled, (state, action) => {
         state.genreMovies = action.payload.results;
+        state.genreMoviesPageCount = action.payload.total_pages;
         console.log(action.payload.results);
       })
       .addCase(getGenresMovies.rejected, (state, action) => {
@@ -233,6 +235,7 @@ export const movieSlice = createSlice({
       .addCase(getShortByYearMovies.pending, (state, action) => {})
       .addCase(getShortByYearMovies.fulfilled, (state, action) => {
         state.genreMovies = action.payload.results;
+        state.genreMoviesPageCount = action.payload.total_pages;
         console.log(action.payload.results);
       })
       .addCase(getShortByYearMovies.rejected, (state, action) => {
@@ -242,6 +245,7 @@ export const movieSlice = createSlice({
       .addCase(getShortByRatingMovies.pending, (state, action) => {})
       .addCase(getShortByRatingMovies.fulfilled, (state, action) => {
         state.genreMovies = action.payload.results;
+        state.genreMoviesPageCount = action.payload.total_pages;
         console.log(action.payload.results);
       })
       .addCase(getShortByRatingMovies.rejected, (state, action) => {
