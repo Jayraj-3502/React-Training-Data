@@ -47,27 +47,43 @@ export default function Search() {
       </div>
       <div>
         <div className="flex flex-row gap-4 justify-center py-3 items-center">
-          <button
-            className="px-5 py-1.5 pb-2 bg-gray-800 rounded-full text-2xl font-bold cursor-pointer disabled:cursor-not-allowed disabled:bg-transparent"
-            disabled={pageCount === 1 ? true : false}
-            onClick={() => {
+          <PageChangeButton
+            text="Prev"
+            on_click_logic={() => {
               setPageCount((prev) => prev - 1);
             }}
-          >
-            Prev
-          </button>
-          <div className="text-2xl font-bold">{pageCount}</div>
-          <button
-            className="px-5 py-1.5 pb-2 bg-gray-800 rounded-full text-2xl font-bold cursor-pointer disabled:cursor-not-allowed disabled:bg-transparent"
-            onClick={() => {
+            disable_logic={() => pageCount === 1}
+          />
+          <div className="text-2xl font-bold text-black dark:text-white">
+            {pageCount}
+          </div>
+          <PageChangeButton
+            text="Next"
+            on_click_logic={() => {
               setPageCount((prev) => prev + 1);
             }}
-            disabled={pageCount === searchPageCount ? true : false}
-          >
-            Next
-          </button>
+            disable_logic={() => pageCount === searchPageCount}
+          />
         </div>
       </div>
     </div>
+  );
+}
+
+function PageChangeButton({
+  text = "",
+  on_click_logic = () => {},
+  disable_logic = () => false,
+}) {
+  return (
+    <button
+      className="px-5 py-1.5 pb-2 bg-gray-300 dark:bg-gray-800 rounded-full text-2xl font-bold cursor-pointer disabled:cursor-not-allowed disabled:bg-transparent text-black dark:text-white disabled:border disableed:dark:border-none "
+      disabled={disable_logic()}
+      onClick={() => {
+        on_click_logic();
+      }}
+    >
+      {text}
+    </button>
   );
 }

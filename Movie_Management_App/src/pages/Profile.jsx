@@ -1,5 +1,4 @@
 import { useDispatch, useSelector } from "react-redux";
-import { Loader } from "./export";
 import { useEffect } from "react";
 import CommanCard from "../components/CommanCard";
 import {

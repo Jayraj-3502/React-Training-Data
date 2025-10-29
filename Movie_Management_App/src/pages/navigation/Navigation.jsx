@@ -73,25 +73,25 @@ export default function Navigation({ userExist = false }) {
           <div className="flex flex-row">
             <Link
               to={"/allmovies"}
-              className="px-3 py-2 rounded-full hover:bg-gray-300 dark:hover:bg-gray-900"
+              className="px-3 py-2 rounded-full hover:bg-gray-300 dark:hover:bg-gray-900 cursor-pointer"
             >
               Movies
             </Link>
             <Link
               to={"/profile"}
-              className="px-3 py-2 rounded-full hover:bg-gray-300 dark:hover:bg-gray-900"
+              className="px-3 py-2 rounded-full hover:bg-gray-300 dark:hover:bg-gray-900 cursor-pointer"
             >
               Profile
             </Link>
             <Link
               to={"/login"}
-              className="px-3 py-2 rounded-full hover:bg-gray-300 dark:hover:bg-gray-900"
+              className="px-3 py-2 rounded-full hover:bg-gray-300 dark:hover:bg-gray-900 cursor-pointer"
               onClick={userExist ? logoutUser : ""}
             >
               {userExist ? "Logout" : "Signin"}
             </Link>
             <div
-              className="px-3 py-2 rounded-full hover:bg-gray-300 dark:hover:bg-gray-900"
+              className="px-3 py-2 rounded-full hover:bg-gray-300 dark:hover:bg-gray-900 cursor-pointer"
               onClick={() => {
                 onThemeSwitch();
               }}
