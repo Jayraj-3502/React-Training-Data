@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice, current } from "@reduxjs/toolkit";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const initialState = {
   users: [],
@@ -59,6 +60,7 @@ export const userSlice = createSlice({
     setCurrentUser: (state, action) => {
       state.currentUser = action.payload;
       state.userExist = true;
+      toast.success("User Logged In Successfully");
       setLocalData(action.payload);
     },
     getCurrentUser: (state, action) => {
@@ -66,6 +68,7 @@ export const userSlice = createSlice({
       if (res) {
         state.currentUser = res;
         state.userExist = true;
+        toast.success("User Logged In Successfully");
       }
     },
     removeCurrentUser: (state, action) => {
@@ -79,6 +82,7 @@ export const userSlice = createSlice({
       localStorage.setItem("mmaUsersData", JSON.stringify(state.users));
       state.currentUser = {};
       state.userExist = false;
+      toast.success("User Logged Out Successfully");
       setLocalData("");
     },
     addWatchList: (state, action) => {
@@ -88,6 +92,7 @@ export const userSlice = createSlice({
         }
       }) || state.currentUser.watch_later.push(action.payload);
       setLocalData(state.currentUser);
+      toast.success("Item added to Watch Later List");
     },
     removeWatchList: (state, action) => {
       state.currentUser.watch_later = state.currentUser.watch_later.filter(
@@ -98,6 +103,7 @@ export const userSlice = createSlice({
         }
       );
       setLocalData(state.currentUser);
+      toast.success("Item removed from Watch Later List");
     },
     addFavoritesList: (state, action) => {
       state.currentUser.favirout_list.find((item) => {
@@ -106,6 +112,7 @@ export const userSlice = createSlice({
         }
       }) || state.currentUser.favirout_list.push(action.payload);
       setLocalData(state.currentUser);
+      toast.success("Item added to Favirouter List");
     },
     removeFavrouteList: (state, action) => {
       state.currentUser.favirout_list = state.currentUser.favirout_list.filter(
@@ -116,14 +123,20 @@ export const userSlice = createSlice({
         }
       );
       setLocalData(state.currentUser);
+      toast.success("Item removed from Favirout List");
     },
     addRecentlyViewed: (state, action) => {
-      state.currentUser.recently_viewed.find((item) => {
-        if (item.movieId === action.payload.movieId) {
-          return true;
-        }
-      }) || state.currentUser.recently_viewed.push(action.payload);
-      setLocalData(state.currentUser);
+      try {
+        state.currentUser.recently_viewed.find((item) => {
+          if (item.movieId === action.payload.movieId) {
+            return true;
+          }
+        }) || state.currentUser.recently_viewed.push(action.payload);
+        setLocalData(state.currentUser);
+        toast.success("Item added to Recent Viewed List");
+      } catch (err) {
+        console.log("This is Error: ", err);
+      }
     },
     removeRecentlyViewed: (state, action) => {
       state.currentUser.recently_viewed =
@@ -133,6 +146,7 @@ export const userSlice = createSlice({
           }
         });
       setLocalData(state.currentUser);
+      toast.success("Item removed from Recently Viewed List");
     },
     getUsersDetails: (state, action) => {
       const data = JSON.parse(localStorage.getItem("mmaUsersData"));
@@ -146,6 +160,7 @@ export const userSlice = createSlice({
     addNewUser: (state, action) => {
       state.users.push(action.payload);
       localStorage.setItem("mmaUsersData", JSON.stringify(state.users));
+      toast.success("New User Added Successfully");
     },
   },
 });

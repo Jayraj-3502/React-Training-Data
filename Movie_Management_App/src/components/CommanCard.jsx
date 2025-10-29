@@ -1,6 +1,7 @@
 import { FaStar } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { removeWatchList } from "../feature/users";
+import { toast } from "react-toastify";
 
 export default function CommanCard({
   imageURL = "",
@@ -8,9 +9,11 @@ export default function CommanCard({
   movieName = "",
   movieId = "",
   removefunction = () => {},
+  toast_message = "",
 }) {
   const dispatch = useDispatch();
 
+  // const notify = () => toast("Item removed from Successfully!");
   return (
     <div className="min-w-fit w-[150px] md:w-[200px] max-w-[200px] rounded-full">
       {/* This is poster of the movie  */}
@@ -43,6 +46,7 @@ export default function CommanCard({
           className=" px-5 py-1.5 rounded-full text-white font-bold bg-red-500 cursor-pointer"
           onClick={() => {
             dispatch(removefunction(movieId));
+            // toast.success(toast_message);
           }}
         >
           Remove

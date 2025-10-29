@@ -37,6 +37,7 @@ export default function Profile() {
               iterable_array={"watch_later"}
               currentUser={currentUser}
               removefunction={removeWatchList}
+              toast_message="Item removed from Watch Later List"
             />
           </div>
 
@@ -47,6 +48,7 @@ export default function Profile() {
               iterable_array={"favirout_list"}
               currentUser={currentUser}
               removefunction={removeFavrouteList}
+              toast_message="Item removed from Favirout List"
             />
           </div>
 
@@ -57,6 +59,7 @@ export default function Profile() {
               iterable_array="recently_viewed"
               currentUser={currentUser}
               removefunction={removeRecentlyViewed}
+              toast_message="Item removed from Recently Viewed List"
             />
           </div>
         </div>
@@ -70,6 +73,7 @@ function CommonLoginFunction({
   iterable_array = "",
   currentUser = {},
   removefunction = () => {},
+  toast_message = "",
 }) {
   console.log(currentUser[iterable_array]);
   return (
@@ -86,6 +90,7 @@ function CommonLoginFunction({
                 ratting={ratting}
                 movieId={movieId}
                 removefunction={removefunction}
+                toast_message={toast_message}
               />
             );
           })}
