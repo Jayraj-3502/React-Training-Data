@@ -15,8 +15,13 @@ import { IoMdMenu } from "react-icons/io";
 export default function AllMovies() {
   const dispatch = useDispatch();
   const userExist = useSelector((state) => state.user.userExist);
-  const { popularMovies, genreDetails, genreMovies, currentGenreId } =
-    useSelector((state) => state.movie);
+  const {
+    popularMovies,
+    genreDetails,
+    genreMovies,
+    currentGenreId,
+    genreMoviesPageCount,
+  } = useSelector((state) => state.movie);
   const [pageNumber, setPageNumber] = useState(1);
   const [filterType, setFilterType] = useState("genre");
   const [genreMenuVisible, setGenreMenuVisible] = useState(false);
@@ -181,6 +186,7 @@ export default function AllMovies() {
                 <PageChangeButton
                   text="Prev"
                   on_click_logic={() => prevPage()}
+                  disabled_logic={() => pageNumber === 1}
                 />
                 <div className="px-5 py-1.5 pb-2 text-2xl font-bold bg-gray-800 rounded-full">
                   {pageNumber}
@@ -189,6 +195,7 @@ export default function AllMovies() {
                 <PageChangeButton
                   text="Next"
                   on_click_logic={() => nextPage()}
+                  disabled_logic={() => pageNumber === genreMoviesPageCount}
                 />
               </div>
             </div>
@@ -201,13 +208,18 @@ export default function AllMovies() {
   );
 }
 
-function PageChangeButton({ text = "", on_click_logic = () => {} }) {
+function PageChangeButton({
+  text = "",
+  on_click_logic = () => {},
+  disabled_logic = () => {},
+}) {
   return (
     <button
       className="px-5 py-1.5 pb-2 bg-gray-300 dark:bg-gray-800 rounded-full text-2xl font-bold cursor-pointer disabled:cursor-not-allowed disabled:bg-transparent text-black dark:text-white disabled:border disableed:dark:border-none "
       onClick={() => {
         on_click_logic();
       }}
+      disabled={disabled_logic()}
     >
       {text}
     </button>
