@@ -40,6 +40,8 @@ export default function Signup() {
         const newData = { ...singupDetails, id: nanoid() };
         dispatch(addNewUser(newData));
         dispatch(setCurrentUser(newData));
+      } else {
+        toast.error("Passwords are not same");
       }
     }
   }
