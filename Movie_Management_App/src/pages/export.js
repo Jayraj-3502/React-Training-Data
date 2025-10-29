@@ -1,5 +1,5 @@
-import Login from "./Auth/Login";
-import Signup from "./Auth/Signup";
+import Login from "./auth/Login";
+import Signup from "./auth/Signup";
 import Details from "./Details";
 import Home from "./Home";
 import Profile from "./Profile";
