@@ -9,6 +9,7 @@ import {
   addWatchList,
 } from "../feature/users";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 export default function MovieCard({
   imageURL = "",
@@ -22,14 +23,17 @@ export default function MovieCard({
 
   function watchListUpdater() {
     dispatch(addWatchList({ imageURL, ratting, movieName, movieId }));
+    // toast.success("Item added to Watch Later List");
   }
 
   function favrouteListUpdater() {
     dispatch(addFavoritesList({ imageURL, ratting, movieName, movieId }));
+    // toast.success("Item added to Favirouter List");
   }
 
   function recentlyViewedUpdater() {
     dispatch(addRecentlyViewed({ imageURL, ratting, movieName, movieId }));
+    // toast.success("Item added to Recent Viewed List");
     navigate(`/details/${movieId}`);
   }
 

@@ -6,10 +6,12 @@ import { FaHeart, FaStar } from "react-icons/fa";
 import { CiBookmarkPlus } from "react-icons/ci";
 import { addFavoritesList, addWatchList } from "../feature/users";
 import { Loader } from "./export";
+import { toast } from "react-toastify";
 
 export default function Details() {
   const param = useParams();
-  const movieDetails = useSelector((state) => state.movie.movieDetails);
+  const { movieDetails } = useSelector((state) => state.movie);
+  const { userExist } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const [genres, setGenres] = useState([]);
 
@@ -99,19 +101,23 @@ export default function Details() {
               </div>
               <div className="flex flex-col md:flex-row gap-2">
                 <button
-                  className="flex flex-row text-2xl gap-2 items-center justify-center border px-3 py-1.5 rounded-full cursor-pointer"
+                  className="flex flex-row text-2xl gap-2 items-center justify-center border px-3 py-1.5 rounded-full cursor-pointer disabled:cursor-not-allowed"
                   onClick={() => {
                     watchListUpdater();
+                    // toast.success("Item added to Watch Later List");
                   }}
+                  disabled={!userExist}
                 >
                   <CiBookmarkPlus className="" />
                   <span>Watch List</span>
                 </button>
                 <button
-                  className="flex flex-row text-2xl gap-2 items-center  justify-center border px-3 py-1.5 rounded-full cursor-pointer"
+                  className="flex flex-row text-2xl gap-2 items-center  justify-center border px-3 py-1.5 rounded-full cursor-pointer disabled:cursor-not-allowed"
                   onClick={() => {
                     favrouteListUpdater();
+                    // toast.success("Item added to Favroute List");
                   }}
+                  disabled={!userExist}
                 >
                   <FaHeart className="text-red-500" />
                   <span>Add Favriout</span>
