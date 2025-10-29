@@ -104,7 +104,11 @@ export default function Navigation({ userExist = false }) {
 
       {/* Mobile Version  */}
       <nav className="bg-[#121212] flex flex-row justify-between items-center border rounded-full p-3 text-2xl w-full gap-10 mx-auto text-[18px] lg:hidden">
-        <div>
+        <div
+          onClick={() => {
+            setMenuVisible(false);
+          }}
+        >
           <Link
             to={"/"}
             className="bg-[#f5c518] text-black rounded-full px-5 pt-1.5 pb-2 font-bold"
@@ -165,10 +169,22 @@ export default function Navigation({ userExist = false }) {
               <Link
                 to={"/login"}
                 className="px-4 py-2 rounded-full hover:bg-gray-900"
-                onClick={userExist ? logoutUser : ""}
+                onClick={() => {
+                  setMenuVisible(false);
+                  return userExist ? logoutUser : "";
+                }}
               >
                 {userExist ? "Logout" : "Signin"}
               </Link>
+              <div
+                className="px-3 py-2 rounded-full hover:bg-gray-300 dark:hover:bg-gray-900 cursor-pointer"
+                onClick={() => {
+                  setMenuVisible(false);
+                  onThemeSwitch();
+                }}
+              >
+                Theme
+              </div>
             </div>
           </div>
         </div>

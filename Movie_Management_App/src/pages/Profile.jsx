@@ -22,13 +22,15 @@ export default function Profile() {
           <div>Please login first.</div>
         </div>
       ) : (
-        <div className="w-full">
-          <div className="text-3xl mb-10 text-black dark:text-white">
+        <div className="w-full flex flex-col">
+          <div className="text-xl md:text-3xl mb-5  md:mb-10 text-black dark:text-white">
             Hello{" "}
-            <span className="text-5xl font-bold">{currentUser.userName}</span>
+            <span className="text-3xl md:text-5xl font-bold">
+              {currentUser.userName}
+            </span>
           </div>
 
-          <div>
+          <div className="mb-10">
             <CommonHeadingDesign display_text={"Watch Later List"} />
             <CommonLoginFunction
               not_found_text="Dont Have any movies in Watch Later List"
@@ -38,7 +40,7 @@ export default function Profile() {
             />
           </div>
 
-          <div>
+          <div className="mb-10">
             <CommonHeadingDesign display_text={"Favirout List"} />
             <CommonLoginFunction
               not_found_text="Dont Have any movies in Favroute List"
@@ -93,8 +95,8 @@ function CommonLoginFunction({
 
 function CommonHeadingDesign({ display_text = "" }) {
   return (
-    <div className="mb-10">
-      <h4 className="text-4xl font-bold text-black dark:text-white">
+    <div className="mb-5 md:mb-10">
+      <h4 className="text-3xl md:text-5xl font-bold text-black dark:text-white">
         {display_text}
       </h4>
     </div>

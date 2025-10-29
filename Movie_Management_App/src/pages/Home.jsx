@@ -83,7 +83,7 @@ function MovieDataLogic(movieList, userExist = false) {
 
 function TitleText({ text = "" }) {
   return (
-    <h2 className="text-5xl font-bold mb-10 text-black dark:text-white">
+    <h2 className="text-3xl md:text-5xl font-bold mb-5 md:mb-10 text-black dark:text-white">
       {text}
     </h2>
   );

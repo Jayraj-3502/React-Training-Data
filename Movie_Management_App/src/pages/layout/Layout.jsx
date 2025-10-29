@@ -18,7 +18,7 @@ export default function Layout() {
   }, [userExist]);
 
   return (
-    <div className="bg-white dark:bg-black min-h-screen p-5 text-white">
+    <div className="bg-white dark:bg-black min-h-screen h-full p-5 text-white">
       <Navigation userExist={userExist} />
       <Outlet />
     </div>
