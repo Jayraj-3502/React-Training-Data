@@ -46,7 +46,6 @@ export default function CommanCard({
           className=" px-5 py-1.5 rounded-full text-white font-bold bg-red-500 cursor-pointer"
           onClick={() => {
             dispatch(removefunction(movieId));
-            // toast.success(toast_message);
           }}
         >
           Remove
