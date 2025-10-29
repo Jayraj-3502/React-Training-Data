@@ -1,6 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Loader, MovieCard } from "./export";
 import { useEffect, useState } from "react";
+import { ImCross } from "react-icons/im";
+
 import {
   getGenresDetails,
   getGenresMovies,
@@ -8,6 +10,7 @@ import {
   getShortByYearMovies,
   setGenreId,
 } from "../feature/movies";
+import { IoMdMenu } from "react-icons/io";
 
 export default function AllMovies() {
   const dispatch = useDispatch();
@@ -16,6 +19,7 @@ export default function AllMovies() {
     useSelector((state) => state.movie);
   const [pageNumber, setPageNumber] = useState(1);
   const [filterType, setFilterType] = useState("genre");
+  const [genreMenuVisible, setGenreMenuVisible] = useState(false);
 
   useEffect(() => {
     dispatch(getGenresDetails());
@@ -25,8 +29,9 @@ export default function AllMovies() {
   }, [dispatch]);
 
   function nextPage() {
+    console.log(filterType);
     setPageNumber((prev) => prev + 1);
-    if (filterType === "genre") {
+    if (filterType === "genre" || filterType === "gener") {
       dispatch(getGenresMovies({ id: currentGenreId, page: pageNumber + 1 }));
     } else if (filterType === "year") {
       dispatch(getShortByYearMovies({ year: "2025", page: pageNumber + 1 }));
@@ -38,8 +43,9 @@ export default function AllMovies() {
   }
 
   function prevPage() {
+    console.log(filterType);
     setPageNumber((prev) => prev - 1);
-    if (filterType === "genre") {
+    if (filterType === "genre" || filterType === "gener") {
       dispatch(getGenresMovies({ id: currentGenreId, page: pageNumber - 1 }));
     } else if (filterType === "year") {
       dispatch(getShortByYearMovies({ year: "2025", page: pageNumber - 1 }));
@@ -52,7 +58,7 @@ export default function AllMovies() {
 
   function generChange(movieId) {
     setPageNumber(1);
-    setFilterType("gener");
+    setFilterType("genre");
     dispatch(setGenreId(movieId));
     dispatch(getGenresMovies({ id: movieId, page: 1 }));
   }
@@ -75,7 +81,7 @@ export default function AllMovies() {
   return (
     <div className="mt-10">
       <div>
-        <h2 className="text-5xl font-bold mb-10 text-black dark:text-white">
+        <h2 className="text-3xl md:text-5xl font-bold mb-5 md:mb-10 text-black dark:text-white">
           Looking For Movies{" "}
           {!userExist ? (
             <span className="text-2xl font-medium">
@@ -86,13 +92,13 @@ export default function AllMovies() {
           )}
         </h2>
       </div>
-      <div className="flex flex-row gap-5">
-        <div className="flex flex-col gap-2 w-[20%]">
+      <div className="flex flex-row gap-5 h-fit">
+        <div className="hidden md:flex md:flex-col gap-2 w-[20%] min-w-fit">
           {!genreDetails
             ? console.log(genreDetails)
             : genreDetails.map((genre) => (
                 <button
-                  className="bg-[#1a1a1a] px-5 py-1.5 pb-2 rounded-full hover:bg-gray-800 w-full"
+                  className="bg-[#1a1a1a] px-5 py-1.5 pb-2 text-[12px] md:text-[18px] rounded-full hover:bg-gray-800 w-full"
                   key={genre.id}
                   onClick={() => {
                     generChange(genre.id);
@@ -102,8 +108,44 @@ export default function AllMovies() {
                 </button>
               ))}
         </div>
+        <div
+          className={`${
+            genreMenuVisible ? "flex" : "hidden"
+          } flex-col gap-2 w-[20%] min-w-fit absolute bg-white dark:bg-black p-5 rounded-xl border z-50 md:hidden`}
+        >
+          <div
+            className="text-black dark:text-white text-2xl flex justify-end cursor-pointer"
+            onClick={() => {
+              setGenreMenuVisible(false);
+            }}
+          >
+            <ImCross />
+          </div>
+          {!genreDetails
+            ? console.log(genreDetails)
+            : genreDetails.map((genre) => (
+                <button
+                  className="bg-[#1a1a1a] px-5 py-1.5 pb-2 text-[12px] md:text-[18px] rounded-full hover:bg-gray-800 w-full"
+                  key={genre.id}
+                  onClick={() => {
+                    setGenreMenuVisible(false);
+                    generChange(genre.id);
+                  }}
+                >
+                  {genre.name}
+                </button>
+              ))}
+        </div>
         <div>
-          <div className="mb-5">
+          <div className="mb-5 flex flex-row gap-3">
+            <div
+              className={`text-black dark:text-white text-2xl md:hidden cursor-pointer`}
+              onClick={() => {
+                setGenreMenuVisible((prev) => !prev);
+              }}
+            >
+              <IoMdMenu />
+            </div>
             <select
               name="sortby"
               className="bg-[#1a1a1a] hover:bg-gray-800 text-white px-3 py-1.5 pb-2 rounded-full"
@@ -119,7 +161,7 @@ export default function AllMovies() {
 
           {genreMovies.length > 0 ? (
             <div>
-              <div className="flex flex-row gap-2 flex-wrap justify-center">
+              <div className="flex flex-row gap-1 md:gap-2 flex-wrap justify-center">
                 {genreMovies.map((movie) => {
                   const { title, id, vote_average, poster_path } = movie;
                   return (
@@ -136,26 +178,18 @@ export default function AllMovies() {
               </div>
 
               <div className="flex flex-row gap-3 justify-center py-3">
-                <button
-                  className="px-5 py-1.5 pb-2 text-2xl font-bold bg-gray-800 rounded-full cursor-pointer disabled:bg-black disabled:cursor-not-allowed"
-                  onClick={() => {
-                    prevPage();
-                  }}
-                  disabled={pageNumber === 1}
-                >
-                  Prev
-                </button>
+                <PageChangeButton
+                  text="Prev"
+                  on_click_logic={() => prevPage()}
+                />
                 <div className="px-5 py-1.5 pb-2 text-2xl font-bold bg-gray-800 rounded-full">
                   {pageNumber}
                 </div>
-                <button
-                  className="px-5 py-1.5 pb-2 text-2xl font-bold bg-gray-800 rounded-full cursor-pointer "
-                  onClick={() => {
-                    nextPage();
-                  }}
-                >
-                  Next
-                </button>
+
+                <PageChangeButton
+                  text="Next"
+                  on_click_logic={() => nextPage()}
+                />
               </div>
             </div>
           ) : (
@@ -164,5 +198,18 @@ export default function AllMovies() {
         </div>
       </div>
     </div>
+  );
+}
+
+function PageChangeButton({ text = "", on_click_logic = () => {} }) {
+  return (
+    <button
+      className="px-5 py-1.5 pb-2 bg-gray-300 dark:bg-gray-800 rounded-full text-2xl font-bold cursor-pointer disabled:cursor-not-allowed disabled:bg-transparent text-black dark:text-white disabled:border disableed:dark:border-none "
+      onClick={() => {
+        on_click_logic();
+      }}
+    >
+      {text}
+    </button>
   );
 }

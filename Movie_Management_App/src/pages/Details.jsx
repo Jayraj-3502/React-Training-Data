@@ -46,18 +46,22 @@ export default function Details() {
 
   return (
     <div className="mt-10">
-      <h1 className="text-5xl font-bold mb-10">Movie Details</h1>
+      <h1 className="text-5xl font-bold mb-10 text-black dark:text-white">
+        Movie Details
+      </h1>
       {Object.keys(movieDetails).length === 0 ? (
         <Loader />
       ) : (
-        <div className="max-w-[900px] mx-auto flex flex-col gap-5 p-5 rounded-xl bg-[#1a1a1a]">
+        <div className="max-w-[900px] mx-auto flex flex-col gap-5 p-5 rounded-xl bg-gray-100 text-black dark:bg-[#1a1a1a] dark:text-white">
           {/* Top part of card  */}
-          <div className="flex flex-row justify-between items-center">
+          <div className="flex flex-row justify-between items-center gap-2">
             <div>
               <div className="mb-3">
-                <h3 className="text-5xl font-bold">{movieDetails.title}</h3>
+                <h3 className="text-2xl md:text-5xl font-bold">
+                  {movieDetails.title}
+                </h3>
               </div>
-              <div className="flex flex-row text-xl">
+              <div className="flex flex-row text-[16px] md:text-xl">
                 <span className="pr-2 border-r">
                   {movieDetails.release_date}
                 </span>
@@ -66,18 +70,20 @@ export default function Details() {
             </div>
 
             <div className="">
-              <div className="text-2xl font-bold">Rating</div>
+              <div className="text-xl md:text-2xl font-bold">Rating</div>
               <div className="flex flex-row gap-2 items-center">
                 <FaStar className="text-yellow-400" />{" "}
                 <div>{movieDetails.vote_average}</div>
               </div>
-              <div className="">Total: {movieDetails.vote_count}</div>
+              <div className="text-[12px] md:text-[18px]">
+                Total: {movieDetails.vote_count}
+              </div>
             </div>
           </div>
 
           {/* Main pard of card */}
-          <div className="flex flex-row gap-5">
-            <div className="min-w-[300px]">
+          <div className="md:flex md:flex-row gap-5">
+            <div className="min-w-[300px] mb-5 md:mb-0">
               <div>
                 <img
                   src={`https://image.tmdb.org/t/p/w300/${movieDetails.poster_path}`}
@@ -91,9 +97,9 @@ export default function Details() {
                 <h4 className="text-2xl font-bold mb-3">Description:</h4>
                 <p className="text-[18px]">{movieDetails.overview}</p>
               </div>
-              <div className="flex flex-row gap-2">
+              <div className="flex flex-col md:flex-row gap-2">
                 <button
-                  className="flex flex-row text-2xl gap-2 items-center border px-3 py-1.5 rounded-full cursor-pointer"
+                  className="flex flex-row text-2xl gap-2 items-center justify-center border px-3 py-1.5 rounded-full cursor-pointer"
                   onClick={() => {
                     watchListUpdater();
                   }}
@@ -102,7 +108,7 @@ export default function Details() {
                   <span>Watch List</span>
                 </button>
                 <button
-                  className="flex flex-row text-2xl gap-2 items-center border px-3 py-1.5 rounded-full cursor-pointer"
+                  className="flex flex-row text-2xl gap-2 items-center  justify-center border px-3 py-1.5 rounded-full cursor-pointer"
                   onClick={() => {
                     favrouteListUpdater();
                   }}
