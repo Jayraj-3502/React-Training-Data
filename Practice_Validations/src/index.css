@@ -12,3 +12,19 @@ form {
   flex-direction: column;
   gap: 5px;
 }
+
+p {
+  margin: 0;
+}
+
+.dynamic-number {
+  display: flex;
+  flex: row;
+  gap: 10px;
+}
+
+.dynamic-number-container {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
